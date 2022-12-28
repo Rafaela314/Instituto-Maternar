@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option go_package = "github.com/Rafaela314/instituto-maternar/gen/go/im/search";
+
+package im.search.v1;
+
+enum HeaderStatus {
+  AMBIGUOUS = 0;
+  SUCCESS = 1;
+  FAILURE = 2;
+  PARTIAL = 3;
+}
+
+message Message {
+  int32 code = 1;
+  string name = 2;
+  string description = 3;
+  int64 id = 4;
+  string idString = 5;
+}
+
+message Header {
+  HeaderStatus status = 1;
+  repeated Message message = 2;
+}

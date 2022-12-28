@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option go_package = "github.com/Rafaela314/instituto-maternar/gen/go/im/search";
+
+import "search/review.proto";
+
+package im.search.v1;
+
+service Review {
+    rpc GetReviews(ReviewsRequest) returns (ReviewsResponse) {};
+}
