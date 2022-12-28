@@ -1,0 +1,16 @@
+
+# Binaries for programs and plugins
+*.exe
+*.exe~
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool
+
+/bin
+/logs
+.DS_Store
+
+schemas/
+.vscode/
