@@ -1,7 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/Rafaela314/instituto-maternar/internal/host"
+)
 
 func main() {
-	fmt.Println("Hello World!")
+
+	host := host.NewHost()
+
+	fmt.Println(host.AppConfig)
 }
