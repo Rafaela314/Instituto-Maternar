@@ -7,10 +7,11 @@ type AppConfig struct {
 	AppDescription  string
 	CopyrightYears  string
 	CopyrightHolder string
-	DBName          string
-	DBUser          string `mapstructure:"DB_USER"`
-	DBHost          string `mapstructure:"DB_HOST"`
-	DBPort          int    `mapstructure:"DB_PORT"`
+	DBName          string `mapstructure:"POSTGRES_NAME"`
+	DBUser          string `mapstructure:"POSTGRES_USER"`
+	DBHost          string `mapstructure:"POSTGRES_HOST"`
+	DBPort          int    `mapstructure:"POSTGRES_PORT"`
+	DBPassword      string `mapstructure:"POSTGRES_PASSWORD"`
 	Host            string
 	DNS             string
 	Port            int
