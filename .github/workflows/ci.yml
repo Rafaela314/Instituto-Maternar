@@ -23,8 +23,8 @@ jobs:
       run: go test -v ./...
 
   test:
-    name: Test
-    runs-on: ubunto-latest
+    #name: Test
+    #runs-on: ubunto-latest
 
     #services:
       #postgres:
@@ -39,7 +39,7 @@ jobs:
           #--health-timeout 5s
           #--health-retries 5
 
-    steps:
+    #steps:
 
     #- name: Set up Go
     #- uses: actions/setup-go@v3
