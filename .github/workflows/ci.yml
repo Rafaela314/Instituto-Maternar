@@ -19,38 +19,17 @@ jobs:
     - name: Build
       run: go build -v ./...
 
-    - name: Test
-      run: go test -v ./...
-
   test:
-    #name: Test
+    name: Test
     runs-on: ubunto-latest
 
-    #services:
-      #postgres:
-        #image: postgres
-        #env:
-          #POSTGRES_USER: root
-          #POSTGRES_PASSWORD: secret
-          #POSTGRES_DB: relato_test
-        #options: >-
-          #--health-cmd ps_isready
-          #--health-interval 10s
-          #--health-timeout 5s
-          #--health-retries 5
-
     steps:
+      - uses: actions/checkout@v3
+      with:
+        go-version: 1.19
 
-    #- name: Set up Go
-    #- uses: actions/setup-go@v3
-    #  with:
-    #    go-version: 1.19
-
-    #- name: Run migrations
-    #- run: make migrateup
-
-    - name: Test
-    - run: make test          
+      - name: Test
+      - run: make test          
 
   golangci:
    name: lint
