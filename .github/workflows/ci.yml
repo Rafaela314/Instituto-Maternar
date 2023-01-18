@@ -19,18 +19,9 @@ jobs:
     - name: Build
       run: go build -v ./...
 
-  test:
-    name: Test
-    runs-on: ubunto-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      with:
-        go-version: 1.19
-
-      - name: Test
-      - run: make test          
-
+    - name: Test
+      run: go test -v ./...    
+      
   golangci:
    name: lint
    runs-on: ubuntu-latest
