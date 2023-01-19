@@ -15,7 +15,9 @@ func NewServer() *Server {
 	router := gin.Default()
 
 	router.POST("/reviews", server.createReview)
-	router.POST("/userss", server.createUser)
+	router.GET("/reviews/:id", server.getReview)
+	router.GET("/reviews", server.listReview)
+	router.POST("/users", server.createUser)
 
 	server.router = router
 
