@@ -1,31 +1,29 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
 	"log"
 
 	_ "git.com/lib/pq"
 	"github.com/Rafaela314/instituto-maternar/api"
-)
-
-const (
-	dbDriver      = "postgres"
-	dbSource      = "postgresql://root:secret@localhost:5432/imdb?sslmode=disable"
-	serverAddress = "0.0.0.0:8080"
+	"github.com/Rafaela314/instituto-maternar/util"
 )
 
 func main() {
 
-	conn, err := sql.Open(dbDriver, dbSource)
+	config, err := util.LoadConfig(".")
 	if err != nil {
-		log.Fatal("could not connect to db:", err)
+		log.Fatal("could not load config:", err)
 	}
-	fmt.Println(conn.Driver())
-
+	/*
+		conn, err := sql.Open(config.DBDriver, config.DBSource)
+		if err != nil {
+			log.Fatal("could not connect to db:", err)
+		}
+		fmt.Println(conn.Driver())
+	*/
 	server := api.NewServer()
 
-	err = server.Start(serverAddress)
+	err = server.Start(config.ServerAddress)
 	if err != nil {
 		log.Fatal("could not start server")
 	}
