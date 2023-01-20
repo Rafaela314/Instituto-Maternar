@@ -14,6 +14,7 @@ type Review struct {
 	Classification string    `json:"classification"` // public or private
 	Amount         float64   `json:"amount"`
 	Insurance      string    `json:"insurance"`
+	OverallRate    int32     `json:"overall_rate"`
 	PlaceID        int       `json:"place_id"`
 	PlaceRate      int32     `json:"place_rate"`
 	DoctorID       int       `json:"doctor_id"`
@@ -30,27 +31,35 @@ type Review struct {
 }
 
 type Doctor struct {
-	ID   int `json:"id"`
-	Name int `json:"name"`
-	CRM  int `json:"crm"`
+	ID          int       `json:"id"`
+	Name        int       `json:"name"`
+	CRM         int       `json:"crm"`
+	AverageRate int32     `json:"average_rate"`
+	CreatedAt   time.Time `json:"created_at"`
 }
 
 type Place struct {
-	ID             int    `json:"id"`
-	Name           string `json:"name"`
-	Address        string `json:"address"`
-	City           string `json:"city"`
-	State          string `json:"state"`
-	Country        string `json:"country"`
-	Classification string `json:"classification"` // public or private
+	ID             int       `json:"id"`
+	Name           string    `json:"name"`
+	Address        string    `json:"address"`
+	City           string    `json:"city"`
+	State          string    `json:"state"`
+	Country        string    `json:"country"`
+	Classification string    `json:"classification"` // public or private
+	AverageRate    int32     `json:"average_rate"`
+	CreatedAt      time.Time `json:"created_at"`
 }
 
 type Midwife struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID          int       `json:"id"`
+	Name        string    `json:"name"`
+	AverageRate int32     `json:"average_rate"`
+	CreatedAt   time.Time `json:"created_at"`
 }
 
 type Doula struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID          int       `json:"id"`
+	Name        string    `json:"name"`
+	AverageRate int32     `json:"average_rate"`
+	CreatedAt   time.Time `json:"created_at"`
 }
