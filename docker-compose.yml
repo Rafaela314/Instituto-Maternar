@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:12-alpine
     restart: always
     hostname: postgres
     env_file: .env
@@ -12,6 +12,16 @@ services:
       - data:/var/lib/postgresql/data
     networks:
       - im
+
+  pgadmin:
+    image: dpage/pgadmin4
+    env_file: .env
+    ports: 
+      - "6543:6543"
+    depends_on:
+      - postgres
+    networks:
+      - im      
 
   api:
     build:
@@ -30,7 +40,6 @@ volumes:
   data:
     driver: local
 
-# Networks to be created to facilitate communication between containers
 networks:
   im:
     driver: bridge
