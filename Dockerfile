@@ -7,7 +7,7 @@ COPY go.mod ./
 COPY go.sum ./
 RUN go mod download
 
-COPY *.go ./
+COPY . ./
 
 # Build the Go app
 RUN go build -o /instituto-maternar
@@ -15,3 +15,8 @@ RUN go build -o /instituto-maternar
 EXPOSE 8080
 
 CMD ["/instituto-maternar"]
+
+
+
+
+
