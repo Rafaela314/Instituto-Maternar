@@ -1,13 +1,15 @@
 package main
 
 import (
+	//"database/sql"
+	//"fmt"
 	"database/sql"
 	"fmt"
 	"log"
 
-	//_ "git.com/lib/pq"
 	"github.com/Rafaela314/instituto-maternar/api"
 	"github.com/Rafaela314/instituto-maternar/util"
+	//_ "git.com/lib/pq"
 )
 
 func main() {
@@ -22,6 +24,7 @@ func main() {
 		log.Fatal("could not connect to db:", err)
 	}
 	fmt.Println(conn.Driver())
+	fmt.Println("\n DB CONNCTED SUCCESFULLY")
 
 	server := api.NewServer()
 
