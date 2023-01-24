@@ -36,23 +36,23 @@ RETURNING id, user_id, title, content, date, classification, amount, overall_rat
 `
 
 type CreateReviewParams struct {
-	UserID         sql.NullInt32
-	Title          string
-	Content        string
-	Classification string
-	Amount         sql.NullString
-	Insurance      sql.NullString
-	PlaceID        int32
-	PlaceRate      int32
-	DoctorID       int32
-	DoctorRate     int32
-	MidwifeID      sql.NullInt32
-	MidwifeRate    sql.NullInt32
-	DoulaID        sql.NullInt32
-	DoulaRate      sql.NullInt32
-	Team           sql.NullString
-	TeamRate       sql.NullInt32
-	Image          sql.NullString
+	UserID         sql.NullInt32  `json:"user_id"`
+	Title          string         `json:"title"`
+	Content        string         `json:"content"`
+	Classification string         `json:"classification"`
+	Amount         sql.NullString `json:"amount"`
+	Insurance      sql.NullString `json:"insurance"`
+	PlaceID        int32          `json:"place_id"`
+	PlaceRate      int32          `json:"place_rate"`
+	DoctorID       int32          `json:"doctor_id"`
+	DoctorRate     int32          `json:"doctor_rate"`
+	MidwifeID      sql.NullInt32  `json:"midwife_id"`
+	MidwifeRate    sql.NullInt32  `json:"midwife_rate"`
+	DoulaID        sql.NullInt32  `json:"doula_id"`
+	DoulaRate      sql.NullInt32  `json:"doula_rate"`
+	Team           sql.NullString `json:"team"`
+	TeamRate       sql.NullInt32  `json:"team_rate"`
+	Image          sql.NullString `json:"image"`
 }
 
 func (q *Queries) CreateReview(ctx context.Context, arg CreateReviewParams) (Review, error) {

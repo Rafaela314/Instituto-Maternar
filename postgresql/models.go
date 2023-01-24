@@ -10,68 +10,68 @@ import (
 )
 
 type Doctor struct {
-	ID          int64
-	Name        string
-	Crm         string
-	AverageRate int32
-	CreatedAt   sql.NullTime
+	ID          int64        `json:"id"`
+	Name        string       `json:"name"`
+	Crm         string       `json:"crm"`
+	AverageRate int32        `json:"average_rate"`
+	CreatedAt   sql.NullTime `json:"created_at"`
 }
 
 type Doula struct {
-	ID          int64
-	Name        string
-	AverageRate int32
-	CreatedAt   sql.NullTime
+	ID          int64        `json:"id"`
+	Name        string       `json:"name"`
+	AverageRate int32        `json:"average_rate"`
+	CreatedAt   sql.NullTime `json:"created_at"`
 }
 
 type Midwife struct {
-	ID          int64
-	Name        string
-	AverageRate int32
-	CreatedAt   sql.NullTime
+	ID          int64        `json:"id"`
+	Name        string       `json:"name"`
+	AverageRate int32        `json:"average_rate"`
+	CreatedAt   sql.NullTime `json:"created_at"`
 }
 
 type Place struct {
-	ID             int64
-	Name           string
-	Addres         sql.NullString
-	City           string
-	State          string
-	Country        sql.NullString
-	AverageRate    int32
-	Classification sql.NullString
-	CreatedAt      sql.NullTime
+	ID             int64          `json:"id"`
+	Name           string         `json:"name"`
+	Addres         sql.NullString `json:"addres"`
+	City           string         `json:"city"`
+	State          string         `json:"state"`
+	Country        sql.NullString `json:"country"`
+	AverageRate    int32          `json:"average_rate"`
+	Classification sql.NullString `json:"classification"`
+	CreatedAt      sql.NullTime   `json:"created_at"`
 }
 
 type Review struct {
-	ID             int64
-	UserID         sql.NullInt32
-	Title          string
-	Content        string
-	Date           time.Time
-	Classification string
-	Amount         sql.NullString
-	OverallRate    int32
-	Insurance      sql.NullString
-	PlaceID        int32
-	PlaceRate      int32
-	DoctorID       int32
-	DoctorRate     int32
-	MidwifeID      sql.NullInt32
-	MidwifeRate    sql.NullInt32
-	DoulaID        sql.NullInt32
-	DoulaRate      sql.NullInt32
-	Team           sql.NullString
-	TeamRate       sql.NullInt32
-	CreatedAt      sql.NullTime
-	UpdatedAt      sql.NullTime
-	Image          sql.NullString
+	ID             int64          `json:"id"`
+	UserID         sql.NullInt32  `json:"user_id"`
+	Title          string         `json:"title"`
+	Content        string         `json:"content"`
+	Date           time.Time      `json:"date"`
+	Classification string         `json:"classification"`
+	Amount         sql.NullString `json:"amount"`
+	OverallRate    int32          `json:"overall_rate"`
+	Insurance      sql.NullString `json:"insurance"`
+	PlaceID        int32          `json:"place_id"`
+	PlaceRate      int32          `json:"place_rate"`
+	DoctorID       int32          `json:"doctor_id"`
+	DoctorRate     int32          `json:"doctor_rate"`
+	MidwifeID      sql.NullInt32  `json:"midwife_id"`
+	MidwifeRate    sql.NullInt32  `json:"midwife_rate"`
+	DoulaID        sql.NullInt32  `json:"doula_id"`
+	DoulaRate      sql.NullInt32  `json:"doula_rate"`
+	Team           sql.NullString `json:"team"`
+	TeamRate       sql.NullInt32  `json:"team_rate"`
+	CreatedAt      sql.NullTime   `json:"created_at"`
+	UpdatedAt      sql.NullTime   `json:"updated_at"`
+	Image          sql.NullString `json:"image"`
 }
 
 type User struct {
-	ID        int64
-	Username  string
-	Email     string
-	Password  string
-	CreatedAt sql.NullTime
+	ID        int64        `json:"id"`
+	Username  string       `json:"username"`
+	Email     string       `json:"email"`
+	Password  string       `json:"password"`
+	CreatedAt sql.NullTime `json:"created_at"`
 }

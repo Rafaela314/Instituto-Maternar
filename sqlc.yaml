@@ -7,5 +7,7 @@ sql:
     go: 
       package: "db"
       out: "postgresql"
+      emit_json_tags: true
+
 
 

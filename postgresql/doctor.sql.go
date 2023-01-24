@@ -20,8 +20,8 @@ RETURNING id, name, crm, average_rate, created_at
 `
 
 type CreateDoctorParams struct {
-	Name string
-	Crm  string
+	Name string `json:"name"`
+	Crm  string `json:"crm"`
 }
 
 func (q *Queries) CreateDoctor(ctx context.Context, arg CreateDoctorParams) (Doctor, error) {
