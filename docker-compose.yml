@@ -1,7 +1,8 @@
 version: "3.9"
 
 services:
-  postgres:
+
+  postgres_db:
     image: postgres:12-alpine
     restart: always
     hostname: postgres
@@ -9,7 +10,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
     networks:
       - im
 
@@ -19,7 +20,7 @@ services:
     ports: 
       - "6543:6543"
     depends_on:
-      - postgres
+      - postgres_db
     networks:
       - im      
 
@@ -27,18 +28,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    hostname: app
-    env_file: .env
     ports:
       - "8080:8080"
+    env_file: .env
     depends_on:
-      - postgres
+      - postgres_db
     networks:
       - im
 
 volumes:
-  data:
-    driver: local
+  pgdata:
 
 networks:
   im:
