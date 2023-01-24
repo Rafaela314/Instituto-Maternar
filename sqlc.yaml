@@ -1,0 +1,11 @@
+version: "2"
+sql:
+- schema: "./db/migration/000001_init_schema.up.sql"
+  queries: "./db/query/"
+  engine: "postgresql"
+  gen:
+    go: 
+      package: "db"
+      out: "postgresql"
+
+
