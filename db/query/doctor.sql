@@ -18,3 +18,9 @@ RETURNING *;
 -- name: DeleteDoctor :exec
 DELETE FROM doctors
 WHERE id = $1;
+
+-- name: UpdateDoctor :exec
+UPDATE doctors
+  set name = $2,
+  crm = $3
+WHERE id = $1;

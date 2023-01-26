@@ -34,7 +34,7 @@ type Midwife struct {
 type Place struct {
 	ID             int64          `json:"id"`
 	Name           string         `json:"name"`
-	Addres         sql.NullString `json:"addres"`
+	Address        sql.NullString `json:"address"`
 	City           string         `json:"city"`
 	State          string         `json:"state"`
 	Country        sql.NullString `json:"country"`

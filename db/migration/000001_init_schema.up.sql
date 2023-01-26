@@ -43,7 +43,7 @@ CREATE TABLE "doctors" (
 CREATE TABLE "places" (
   "id" bigserial PRIMARY KEY,
   "name" varchar NOT NULL,
-  "addres" varchar,
+  "address" varchar,
   "city" varchar NOT NULL,
   "state" varchar NOT NULL,
   "country" varchar,

@@ -98,3 +98,21 @@ func (q *Queries) ListDoctors(ctx context.Context) ([]Doctor, error) {
 	}
 	return items, nil
 }
+
+const updateDoctor = `-- name: UpdateDoctor :exec
+UPDATE doctors
+  set name = $2,
+  crm = $3
+WHERE id = $1
+`
+
+type UpdateDoctorParams struct {
+	ID   int64  `json:"id"`
+	Name string `json:"name"`
+	Crm  string `json:"crm"`
+}
+
+func (q *Queries) UpdateDoctor(ctx context.Context, arg UpdateDoctorParams) error {
+	_, err := q.db.ExecContext(ctx, updateDoctor, arg.ID, arg.Name, arg.Crm)
+	return err
+}

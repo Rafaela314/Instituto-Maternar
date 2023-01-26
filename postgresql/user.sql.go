@@ -100,3 +100,28 @@ func (q *Queries) ListUsers(ctx context.Context) ([]User, error) {
 	}
 	return items, nil
 }
+
+const updateUser = `-- name: UpdateUser :exec
+UPDATE users
+  set username = $2,
+  email = $3,
+  password = $4
+WHERE id = $1
+`
+
+type UpdateUserParams struct {
+	ID       int64  `json:"id"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) error {
+	_, err := q.db.ExecContext(ctx, updateUser,
+		arg.ID,
+		arg.Username,
+		arg.Email,
+		arg.Password,
+	)
+	return err
+}

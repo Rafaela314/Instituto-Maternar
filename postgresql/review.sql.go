@@ -8,12 +8,14 @@ package db
 import (
 	"context"
 	"database/sql"
+	"time"
 )
 
 const createReview = `-- name: CreateReview :one
 INSERT INTO reviews (
   user_id,
   title,
+  date,
   content,
   classification,
   amount,
@@ -28,9 +30,10 @@ INSERT INTO reviews (
   doula_rate,
   team, 
   team_rate,
+  overall_rate,
   image
 ) VALUES (
-  $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17
+  $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19
 )
 RETURNING id, user_id, title, content, date, classification, amount, overall_rate, insurance, place_id, place_rate, doctor_id, doctor_rate, midwife_id, midwife_rate, doula_id, doula_rate, team, team_rate, created_at, updated_at, image
 `
@@ -38,6 +41,7 @@ RETURNING id, user_id, title, content, date, classification, amount, overall_rat
 type CreateReviewParams struct {
 	UserID         sql.NullInt32  `json:"user_id"`
 	Title          string         `json:"title"`
+	Date           time.Time      `json:"date"`
 	Content        string         `json:"content"`
 	Classification string         `json:"classification"`
 	Amount         sql.NullString `json:"amount"`
@@ -52,6 +56,7 @@ type CreateReviewParams struct {
 	DoulaRate      sql.NullInt32  `json:"doula_rate"`
 	Team           sql.NullString `json:"team"`
 	TeamRate       sql.NullInt32  `json:"team_rate"`
+	OverallRate    int32          `json:"overall_rate"`
 	Image          sql.NullString `json:"image"`
 }
 
@@ -59,6 +64,7 @@ func (q *Queries) CreateReview(ctx context.Context, arg CreateReviewParams) (Rev
 	row := q.db.QueryRowContext(ctx, createReview,
 		arg.UserID,
 		arg.Title,
+		arg.Date,
 		arg.Content,
 		arg.Classification,
 		arg.Amount,
@@ -73,6 +79,7 @@ func (q *Queries) CreateReview(ctx context.Context, arg CreateReviewParams) (Rev
 		arg.DoulaRate,
 		arg.Team,
 		arg.TeamRate,
+		arg.OverallRate,
 		arg.Image,
 	)
 	var i Review
@@ -197,4 +204,68 @@ func (q *Queries) ListReviews(ctx context.Context) ([]Review, error) {
 		return nil, err
 	}
 	return items, nil
+}
+
+const updateReview = `-- name: UpdateReview :exec
+UPDATE reviews
+  set title = $2,
+  content = $3,
+  classification = $4, 
+  amount = $5, 
+  insurance = $6, 
+  place_id = $7, 
+  place_rate = $8,
+  doctor_id = $9,
+  doctor_rate = $10,
+  midwife_id= $11,
+  midwife_rate = $12,
+  doula_id = $13,
+  doula_rate = $14,
+  team = $15, 
+  team_rate = $16,
+  image = $17 
+WHERE id = $1
+`
+
+type UpdateReviewParams struct {
+	ID             int64          `json:"id"`
+	Title          string         `json:"title"`
+	Content        string         `json:"content"`
+	Classification string         `json:"classification"`
+	Amount         sql.NullString `json:"amount"`
+	Insurance      sql.NullString `json:"insurance"`
+	PlaceID        int32          `json:"place_id"`
+	PlaceRate      int32          `json:"place_rate"`
+	DoctorID       int32          `json:"doctor_id"`
+	DoctorRate     int32          `json:"doctor_rate"`
+	MidwifeID      sql.NullInt32  `json:"midwife_id"`
+	MidwifeRate    sql.NullInt32  `json:"midwife_rate"`
+	DoulaID        sql.NullInt32  `json:"doula_id"`
+	DoulaRate      sql.NullInt32  `json:"doula_rate"`
+	Team           sql.NullString `json:"team"`
+	TeamRate       sql.NullInt32  `json:"team_rate"`
+	Image          sql.NullString `json:"image"`
+}
+
+func (q *Queries) UpdateReview(ctx context.Context, arg UpdateReviewParams) error {
+	_, err := q.db.ExecContext(ctx, updateReview,
+		arg.ID,
+		arg.Title,
+		arg.Content,
+		arg.Classification,
+		arg.Amount,
+		arg.Insurance,
+		arg.PlaceID,
+		arg.PlaceRate,
+		arg.DoctorID,
+		arg.DoctorRate,
+		arg.MidwifeID,
+		arg.MidwifeRate,
+		arg.DoulaID,
+		arg.DoulaRate,
+		arg.Team,
+		arg.TeamRate,
+		arg.Image,
+	)
+	return err
 }
