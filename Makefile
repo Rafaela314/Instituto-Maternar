@@ -1,4 +1,4 @@
-.PHONY: test start stop build run migrateup migratedown sqlc
+.PHONY: test start stop build run migrateup migratedown sqlc 
 
 test:
 	go test -v -cover ./...
@@ -22,4 +22,5 @@ migratedown:
 	migrate -path db/migration -database "postgresql://admin:admin@0.0.0.0:5432/appdb?sslmode=disable" -verbose down 
 
 sqlc:
-	sqlc generate	
+	sqlc generate
+
