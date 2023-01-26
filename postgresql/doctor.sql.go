@@ -12,20 +12,22 @@ import (
 const createDoctor = `-- name: CreateDoctor :one
 INSERT INTO doctors (
   name,
-  crm
+  crm,
+  average_rate
 ) VALUES (
-  $1, $2
+  $1, $2, $3
 )
 RETURNING id, name, crm, average_rate, created_at
 `
 
 type CreateDoctorParams struct {
-	Name string `json:"name"`
-	Crm  string `json:"crm"`
+	Name        string `json:"name"`
+	Crm         string `json:"crm"`
+	AverageRate int32  `json:"average_rate"`
 }
 
 func (q *Queries) CreateDoctor(ctx context.Context, arg CreateDoctorParams) (Doctor, error) {
-	row := q.db.QueryRowContext(ctx, createDoctor, arg.Name, arg.Crm)
+	row := q.db.QueryRowContext(ctx, createDoctor, arg.Name, arg.Crm, arg.AverageRate)
 	var i Doctor
 	err := row.Scan(
 		&i.ID,
@@ -68,10 +70,17 @@ func (q *Queries) GetDoctor(ctx context.Context, id int64) (Doctor, error) {
 const listDoctors = `-- name: ListDoctors :many
 SELECT id, name, crm, average_rate, created_at FROM doctors
 ORDER BY id
+LIMIT $1
+OFFSET $2
 `
 
-func (q *Queries) ListDoctors(ctx context.Context) ([]Doctor, error) {
-	rows, err := q.db.QueryContext(ctx, listDoctors)
+type ListDoctorsParams struct {
+	Limit  int32 `json:"limit"`
+	Offset int32 `json:"offset"`
+}
+
+func (q *Queries) ListDoctors(ctx context.Context, arg ListDoctorsParams) ([]Doctor, error) {
+	rows, err := q.db.QueryContext(ctx, listDoctors, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
