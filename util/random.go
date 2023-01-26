@@ -1,0 +1,46 @@
+package util
+
+import (
+	"math/rand"
+	"strings"
+	"time"
+)
+
+const alphabet = "abcdefghijklmnopqrstuvxz"
+
+// every time the code is run, the generated values will be different
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
+
+// RandomInt generates a random integer between min and max
+func RandInt(min, max int64) int64 {
+	return min + rand.Int63n(max-min+1)
+}
+
+// RandomString generates a random string of length n
+func RandomString(n int) string {
+	var sb strings.Builder
+	k := len(alphabet)
+
+	for i := 0; i < n; i++ {
+		c := alphabet[rand.Intn(k)]
+		sb.WriteByte(c)
+	}
+
+	return sb.String()
+}
+
+// RandomName generates a random name
+func RandomName() string {
+	return RandomString(6)
+}
+
+// RandomClassification generates a random classification
+func RandomClassification() string {
+	classifications := []string{"private", "public"}
+	n := len(classifications)
+
+	return classifications[rand.Intn(n)]
+
+}

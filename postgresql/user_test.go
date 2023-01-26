@@ -4,14 +4,15 @@ import (
 	"context"
 	"testing"
 
+	"github.com/Rafaela314/instituto-maternar/util"
 	"github.com/stretchr/testify/require"
 )
 
 func TestCreateUser(t *testing.T) {
 	arg := CreateUserParams{
-		Username: "name",
-		Email:    "@email",
-		Password: "pass123",
+		Username: util.RandomName(),
+		Email:    util.RandomName(),
+		Password: util.RandomName(),
 	}
 
 	user, err := testQueries.CreateUser(context.Background(), arg)
