@@ -4,14 +4,17 @@ WHERE id = $1 LIMIT 1;
 
 -- name: ListDoctors :many
 SELECT * FROM doctors
-ORDER BY id;
+ORDER BY id
+LIMIT $1
+OFFSET $2;
 
 -- name: CreateDoctor :one
 INSERT INTO doctors (
   name,
-  crm
+  crm,
+  average_rate
 ) VALUES (
-  $1, $2
+  $1, $2, $3
 )
 RETURNING *;
 
