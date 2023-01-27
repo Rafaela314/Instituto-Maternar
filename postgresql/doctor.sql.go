@@ -9,6 +9,19 @@ import (
 	"context"
 )
 
+const countDoctorReviews = `-- name: CountDoctorReviews :one
+SELECT COUNT(id)
+FROM reviews
+WHERE doctor_id = $1
+`
+
+func (q *Queries) CountDoctorReviews(ctx context.Context, doctorID int32) (int64, error) {
+	row := q.db.QueryRowContext(ctx, countDoctorReviews, doctorID)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
 const createDoctor = `-- name: CreateDoctor :one
 INSERT INTO doctors (
   name,
@@ -67,6 +80,58 @@ func (q *Queries) GetDoctor(ctx context.Context, id int64) (Doctor, error) {
 	return i, err
 }
 
+const listDoctorReviews = `-- name: ListDoctorReviews :many
+SELECT id, user_id, title, content, date, classification, amount, overall_rate, insurance, place_id, place_rate, doctor_id, doctor_rate, midwife_id, midwife_rate, doula_id, doula_rate, team, team_rate, created_at, updated_at, image FROM reviews
+WHERE doctor_id = $1
+ORDER BY id
+`
+
+func (q *Queries) ListDoctorReviews(ctx context.Context, doctorID int32) ([]Review, error) {
+	rows, err := q.db.QueryContext(ctx, listDoctorReviews, doctorID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Review
+	for rows.Next() {
+		var i Review
+		if err := rows.Scan(
+			&i.ID,
+			&i.UserID,
+			&i.Title,
+			&i.Content,
+			&i.Date,
+			&i.Classification,
+			&i.Amount,
+			&i.OverallRate,
+			&i.Insurance,
+			&i.PlaceID,
+			&i.PlaceRate,
+			&i.DoctorID,
+			&i.DoctorRate,
+			&i.MidwifeID,
+			&i.MidwifeRate,
+			&i.DoulaID,
+			&i.DoulaRate,
+			&i.Team,
+			&i.TeamRate,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.Image,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listDoctors = `-- name: ListDoctors :many
 SELECT id, name, crm, average_rate, created_at FROM doctors
 ORDER BY id
@@ -111,17 +176,24 @@ func (q *Queries) ListDoctors(ctx context.Context, arg ListDoctorsParams) ([]Doc
 const updateDoctor = `-- name: UpdateDoctor :exec
 UPDATE doctors
   set name = $2,
-  crm = $3
+  crm = $3,
+  average_rate = $4
 WHERE id = $1
 `
 
 type UpdateDoctorParams struct {
-	ID   int64  `json:"id"`
-	Name string `json:"name"`
-	Crm  string `json:"crm"`
+	ID          int64  `json:"id"`
+	Name        string `json:"name"`
+	Crm         string `json:"crm"`
+	AverageRate int32  `json:"average_rate"`
 }
 
 func (q *Queries) UpdateDoctor(ctx context.Context, arg UpdateDoctorParams) error {
-	_, err := q.db.ExecContext(ctx, updateDoctor, arg.ID, arg.Name, arg.Crm)
+	_, err := q.db.ExecContext(ctx, updateDoctor,
+		arg.ID,
+		arg.Name,
+		arg.Crm,
+		arg.AverageRate,
+	)
 	return err
 }
