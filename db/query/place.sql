@@ -34,3 +34,7 @@ UPDATE places
   classification = $7
 WHERE id = $1;
 
+-- name: CountPlaceReviews :one
+SELECT COUNT(id)
+FROM reviews
+WHERE place_id = $1;
