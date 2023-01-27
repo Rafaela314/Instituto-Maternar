@@ -10,6 +10,19 @@ import (
 	"database/sql"
 )
 
+const countPlaceReviews = `-- name: CountPlaceReviews :one
+SELECT COUNT(id)
+FROM reviews
+WHERE place_id = $1
+`
+
+func (q *Queries) CountPlaceReviews(ctx context.Context, placeID int32) (int64, error) {
+	row := q.db.QueryRowContext(ctx, countPlaceReviews, placeID)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
 const createPlace = `-- name: CreatePlace :one
 INSERT INTO places (
   name,
