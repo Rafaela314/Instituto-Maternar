@@ -30,14 +30,6 @@ type Review struct {
 	Image          string    `json:"image"`
 }
 
-type Doctor struct {
-	ID          int       `json:"id"`
-	Name        int       `json:"name"`
-	CRM         int       `json:"crm"`
-	AverageRate int32     `json:"average_rate"`
-	CreatedAt   time.Time `json:"created_at"`
-}
-
 type Place struct {
 	ID             int       `json:"id"`
 	Name           string    `json:"name"`
