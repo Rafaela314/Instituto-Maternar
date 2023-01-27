@@ -36,8 +36,8 @@ func TestCreateDoctor(t *testing.T) {
 
 func TestGetDoctor(t *testing.T) {
 	doctor := createRandomDoctor(t)
-	doctor1, err := testQueries.GetDoctor(context.Background(), doctor.ID)
 
+	doctor1, err := testQueries.GetDoctor(context.Background(), doctor.ID)
 	require.NoError(t, err)
 	require.NotEmpty(t, doctor)
 
@@ -54,30 +54,30 @@ func TestUpdateDoctor(t *testing.T) {
 	arg := UpdateDoctorParams{
 		ID:   doctor.ID,
 		Name: util.RandomName(),
+		Crm:  util.RandomName(),
 	}
 
 	err := testQueries.UpdateDoctor(context.Background(), arg)
 	require.NoError(t, err)
 
 	doctor1, err := testQueries.GetDoctor(context.Background(), doctor.ID)
-
 	require.NoError(t, err)
 	require.NotEmpty(t, doctor1)
 
 	require.Equal(t, doctor.ID, doctor1.ID)
-	require.Equal(t, doctor.Name, doctor1.Name)
-	require.Equal(t, doctor.Crm, doctor1.Crm)
+	require.Equal(t, arg.Name, doctor1.Name)
+	require.Equal(t, arg.Crm, doctor1.Crm)
 
 }
+
 func TestDeleteDoctor(t *testing.T) {
 	doctor := createRandomDoctor(t)
-	err := testQueries.DeleteDoctor(context.Background(), doctor.ID)
 
+	err := testQueries.DeleteDoctor(context.Background(), doctor.ID)
 	require.NoError(t, err)
 
 	doctor1, err := testQueries.GetDoctor(context.Background(), doctor.ID)
-
-	require.NoError(t, err)
+	require.Error(t, err)
 	require.EqualError(t, err, sql.ErrNoRows.Error())
 	require.Empty(t, doctor1)
 }
@@ -95,7 +95,5 @@ func TestListDoctors(t *testing.T) {
 	doctors, err := testQueries.ListDoctors(context.Background(), arg)
 	require.NoError(t, err)
 	require.Len(t, doctors, 5)
-
-	require.NoError(t, err)
 
 }

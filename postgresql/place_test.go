@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestCreatePlace(t *testing.T) {
+func createRandomPlace(t *testing.T) Place {
 	arg := CreatePlaceParams{
 		Name:        util.RandomName(),
 		Address:     sql.NullString{String: util.RandomName()},
@@ -27,4 +27,10 @@ func TestCreatePlace(t *testing.T) {
 
 	require.NotZero(t, place.ID)
 	require.NotZero(t, place.CreatedAt)
+	return place
+
+}
+
+func TestCreatePlace(t *testing.T) {
+	createRandomPlace(t)
 }

@@ -11,16 +11,22 @@ import (
 
 func TestCreateReview(t *testing.T) {
 
+	doctor := createRandomDoctor(t)
+
+	user := createRandomUser(t)
+
+	place := createRandomPlace(t)
+
 	arg := CreateReviewParams{
 		Title:          "title",
 		Content:        "conetnt",
 		Date:           time.Now(),
 		Classification: "e",
-		UserID:         sql.NullInt32{Int32: 5},
+		UserID:         sql.NullInt32{Int32: int32(user.ID)},
 		Amount:         sql.NullString{String: ""},
-		PlaceID:        4,
+		PlaceID:        int32(place.ID),
 		PlaceRate:      3,
-		DoctorID:       2,
+		DoctorID:       int32(doctor.ID),
 		DoctorRate:     4,
 		OverallRate:    3,
 	}
