@@ -1,16 +1,19 @@
 package api
 
-import "github.com/gin-gonic/gin"
+import (
+	db "github.com/Rafaela314/instituto-maternar/db/sqlc"
+	"github.com/gin-gonic/gin"
+)
 
 // Server serves HTTP requests
 type Server struct {
-	// TODO: add store *db.Dtore for database interaction
+	store  db.Store
 	router *gin.Engine
 }
 
 // NewServer creates a new HTTP server and setup routing
-func NewServer() *Server {
-	server := &Server{}
+func NewServer(store db.Store) *Server {
+	server := &Server{store: store}
 
 	router := gin.Default()
 

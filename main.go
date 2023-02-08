@@ -7,9 +7,10 @@ import (
 	"fmt"
 	"log"
 
+	_ "git.com/lib/pq"
 	"github.com/Rafaela314/instituto-maternar/api"
+	db "github.com/Rafaela314/instituto-maternar/db/sqlc"
 	"github.com/Rafaela314/instituto-maternar/util"
-	//_ "git.com/lib/pq"
 )
 
 func main() {
@@ -23,10 +24,12 @@ func main() {
 	if err != nil {
 		log.Fatal("could not connect to db:", err)
 	}
-	fmt.Println(conn.Driver())
+
+	store := db.NewStore(conn)
+
 	fmt.Println("\n DB CONNCTED SUCCESFULLY")
 
-	server := api.NewServer()
+	server := api.NewServer(store)
 
 	err = server.Start(config.ServerAddress)
 	if err != nil {
