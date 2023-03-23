@@ -1,4 +1,4 @@
-.PHONY: test start stop build run migrateup migratedown sqlc 
+.PHONY: test start stop build run migrateup migratedown sqlc mock
 
 test:
 	go test -v -cover ./...
@@ -23,4 +23,9 @@ migratedown:
 
 sqlc:
 	sqlc generate
+
+mock:
+	mockgen -package mockdb -destination db/mock/sotre.go github.com/Rafaela314/instituto-maternar/db/sqlc Store	
+
+
 
